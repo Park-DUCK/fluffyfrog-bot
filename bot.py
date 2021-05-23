@@ -54,14 +54,13 @@ async def start_censor(ctx):
 # 이벤트들
 @bot.event
 async def on_message_delete(message):
-  if censorship == True:
-    message_content = message.content
-    bad = False
-    for word in badtalk:
-      if word in message_content:
-        bad = True
-    if not bad:
-      await message.channel.send('내가 봤는데 ' + str(message.author) + ' 얘가 \"' + message.content + '\" 쓰고 글삭튀 했어')
+  message_content = message.content
+  bad = False
+  for word in badtalk:
+    if word in message_content:
+      bad = True
+  if not bad:
+    await message.channel.send('내가 봤는데 ' + str(message.author) + ' 얘가 \"' + message.content + '\" 쓰고 글삭튀 했어')
 
 @bot.event
 async def on_member_join(member):  
@@ -71,14 +70,15 @@ async def on_member_join(member):
 @bot.event
 async def on_message(message):
   message_content = message.content
-  bad = False
-  for word in badtalk:
-    if word in message_content and str(message.author) != '복실 개구리#0898':
-      bad = True
-  if bad:
-    await message.channel.send('나쁜 말 하지마 :(')
-    await message.delete()
-  await bot.process_commands(message)
+  if censorship:
+    bad = False
+    for word in badtalk:
+      if word in message_content and str(message.author) != '복실 개구리#0898':
+        bad = True
+    if bad:
+      await message.channel.send('나쁜 말 하지마 :(')
+      await message.delete()
+    await bot.process_commands(message)
 
 
 
