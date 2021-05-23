@@ -47,7 +47,7 @@ async def badtalking(ctx):
 async def stop_censor(ctx):
   censorship = False
     
-@bot.command(name='검열 ㄴ')
+@bot.command(name='검열 ㄱ')
 async def start_censor(ctx):
   censorship = True
     
