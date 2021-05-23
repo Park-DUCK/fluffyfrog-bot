@@ -59,10 +59,11 @@ async def on_message_delete(message):
 async def on_message_edit(before, after):
   bad = False
   for word in badtalk:
-    if word in before.content:
-      bad = True
-    elif word in after.content:
-      bad = True
+      if word in after.content:
+        bad = True
+  if bad:
+    await after.channel.send('나쁜 말 하지마 :(')
+    await after.delete()
   if not bad:
 	  await before.channel.send('내가 봤는데 ' + str(after.author)  + ' 얘가 \"' + before.content + "->" + after.content + '\" 이렇게 수정했어')
 
