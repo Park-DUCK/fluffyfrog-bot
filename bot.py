@@ -19,8 +19,8 @@ async def change_status():
 @bot.event
 async def on_ready():
   change_status.start() 
-  print("--- 연결 성공 ---")
-  print("봇 이름: {bot.user.name}")
+  print(f"--- 연결 성공 ---")
+  print(f"봇 이름: {bot.user.name}")
 
 # 커맨드들
 @bot.command(name='안녕')
