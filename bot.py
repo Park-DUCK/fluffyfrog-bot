@@ -17,7 +17,8 @@ gender_hate = ['한남', '소추', '한녀', '김치녀']
 # 1시간마다 상태 변경
 @tasks.loop(hours=1)
 async def change_status():  
-  await bot.change_presence(activity=discord.Game(next(playing)))
+  doing_now = discord.Game(next(playing))
+  await bot.change_presence(activity=doing_now)
 
 @bot.event
 async def on_ready():
@@ -30,10 +31,10 @@ async def on_ready():
 async def hello(ctx):
   await ctx.send('안녕')
 
-# 인성질
+# 머해
 @bot.command(name='뭐해')
 async def doing(ctx):
-  await ctx.send('혹시 네 눈은 데코레이션이니? 내 상태 메시지를 보면 되잖아')
+  await ctx.send(doing_now)
 
 # 금지어들 알려주기
 @bot.command(name='금지어')
