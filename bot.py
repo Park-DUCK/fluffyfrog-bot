@@ -14,6 +14,9 @@ bad_word = ['씨발', '시발', '개새끼', '병신', '느금']
 # 젠더 혐오발언
 gender_hate = ['한남', '소추', '한녀', '김치녀']
 
+# 현재 상태
+doing_now = ''
+
 # 1시간마다 상태 변경
 @tasks.loop(hours=1)
 async def change_status():  
