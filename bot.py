@@ -6,10 +6,13 @@ from itertools import cycle
 bot = commands.Bot(command_prefix = '복실아 ') 
 
 # 상태 메시지 리스트
-playing = cycle(['BL만화 감상', '공부', '유튜브 시청', '넷플릭스 시청', '디씨', '트위터'])
+playing = cycle(['여자친구랑 BL 감상', '여자친구랑 공부', '유튜브 시청', '여자친구랑 데이트', '여자친구랑 디씨', '여자친구랑 트위터'])
 
 # 금지어
 badtalk = ['씨발', '시발', '개새끼', '병신', '느금']
+
+# 젠더 혐오발언
+gender_hate = ['한남', '소추', '한녀', '김치녀']
 
 # 1시간마다 상태 변경
 @tasks.loop(hours=1)
@@ -37,6 +40,10 @@ async def whatrudoing(ctx):
 async def badtalking(ctx):
   notice = '금지어는 '
   for word in badtalk:
+    notice += '\"'
+    notice += word
+    notice += '\", '
+  for word in gender_hate:
     notice += '\"'
     notice += word
     notice += '\", '
@@ -78,12 +85,22 @@ async def on_member_join(member):
 async def on_message(message):
   message_content = message.content
   bad = False
+  warning = ''
+
   for word in badtalk:
     if word in message_content and str(message.author) != '복실 개구리#0898':
       bad = True
+      warning = '나쁜 말 하지마!'
+
+  for word in gender_hate:
+    if word in message_content and str(message.author) != '복실 개구리#0898':
+      bad = True
+      warning = '젠더 혐오발언 금지!'  
+
   if bad:
-    await message.channel.send('나쁜 말 하지마 :(')
+    await message.channel.send(warning)
     await message.delete()
+
   await bot.process_commands(message)
 
 
