@@ -20,8 +20,8 @@ doing_now = ''
 # 1시간마다 상태 변경
 @tasks.loop(hours=1)
 async def change_status():  
-  doing_now = discord.Game(next(playing))
-  await bot.change_presence(activity=doing_now)
+  doing_now = next(playing)
+  await bot.change_presence(activity=discord.Game(doing_now))
 
 @bot.event
 async def on_ready():
@@ -37,7 +37,7 @@ async def hello(ctx):
 # 머해
 @bot.command(name='뭐해')
 async def doing(ctx):
-  await ctx.send(doing_now)
+  await ctx.send(doing_now + '하고 있어')
 
 # 금지어들 알려주기
 @bot.command(name='금지어')
