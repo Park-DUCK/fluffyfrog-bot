@@ -9,7 +9,7 @@ bot = commands.Bot(command_prefix = '복실아 ')
 playing = cycle(['여자친구랑 BL 감상', '여자친구랑 공부', '유튜브 시청', '여자친구랑 데이트', '여자친구랑 디씨', '여자친구랑 트위터'])
 
 # 금지어
-badtalk = ['씨발', '시발', '개새끼', '병신', '느금']
+bad_word = ['씨발', '시발', '개새끼', '병신', '느금']
 
 # 젠더 혐오발언
 gender_hate = ['한남', '소추', '한녀', '김치녀']
@@ -32,14 +32,14 @@ async def hello(ctx):
 
 # 인성질
 @bot.command(name='뭐해')
-async def whatrudoing(ctx):
+async def doing(ctx):
   await ctx.send('혹시 네 눈은 데코레이션이니? 내 상태 메시지를 보면 되잖아')
 
 # 금지어들 알려주기
 @bot.command(name='금지어')
-async def badtalking(ctx):
+async def ban_word(ctx):
   notice = '금지어는 '
-  for word in badtalk:
+  for word in bad_word:
     notice += '\"'
     notice += word
     notice += '\", '
@@ -55,9 +55,10 @@ async def badtalking(ctx):
 @bot.event
 async def on_message_delete(message):
   bad = False
-  for word in badtalk:
+  ban_word = bad_word + gender_hate
+  for word in ban_word:
     if word in message.content:
-      bad = True
+      bad = True    
   if not bad:
     await message.channel.send('내가 봤는데 ' + str(message.author) + ' 얘가 \"' + message.content + '\" 쓰고 글삭튀 했어')
 
@@ -65,7 +66,7 @@ async def on_message_delete(message):
 @bot.event
 async def on_message_edit(before, after):
   bad = False
-  for word in badtalk:
+  for word in bad_word:
       if word in after.content:
         bad = True
   if bad:
@@ -87,7 +88,7 @@ async def on_message(message):
   bad = False
   warning = ''
 
-  for word in badtalk:
+  for word in bad_word:
     if word in message_content and str(message.author) != '복실 개구리#0898':
       bad = True
       warning = '나쁜 말 하지마!'
