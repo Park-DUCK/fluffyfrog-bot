@@ -6,7 +6,7 @@ from itertools import cycle
 bot = commands.Bot(command_prefix = '복실아 ') 
 
 # 상태 메시지 리스트
-playing = cycle(['여자친구랑 BL 감상', '여자친구랑 공부', '유튜브 시청', '여자친구랑 데이트', '여자친구랑 디씨', '여자친구랑 트위터'])
+playing = cycle(['남자친구랑 BL 감상', '여자친구랑 공부', '유튜브 시청', '여자친구랑 데이트', '여자친구랑 디씨', '여자친구랑 트위터'])
 
 # 금지어
 bad_word = ['씨발', '시발', '개새끼', '병신', '느금']
