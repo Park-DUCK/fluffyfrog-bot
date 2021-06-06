@@ -59,7 +59,7 @@ async def ban_word(ctx):
   await ctx.send(notice)
 
 # 노래 추천
-@bot.command(name='노래 추천')
+@bot.command(name='노래추천')
 async def song_recmd(ctx):
   pl_id = 'PLvQ2Ez_GF9ibjUabkEvFE1JPANErbsEj5'
   yt_api_key = os.environ['yt_api_key']
