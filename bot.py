@@ -68,8 +68,7 @@ async def song_recmd(ctx):
   item_vids = []g
   for item in pl_items:
       item_vids.append('www.youtube.com/watch?v=' + item['snippet']['resourceId']['videoId'])
-  await ctx.send(item_vids[random.randint(0, len(pl_items) - 1)])
-  await ctx.send('이 노래는 어때?')
+  await ctx.send(item_vids[random.randint(0, len(pl_items) - 1)] + '\n이 노래는 어때?')
 
 # 글삭튀 검거
 @bot.event
