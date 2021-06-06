@@ -65,7 +65,7 @@ async def song_recmd(ctx):
   yt_api_key = os.environ['yt_api_key']
   get_pl_url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + pl_id + '&maxResults=50&key=' + yt_api_key
   pl_items = requests.get(get_pl_url).json()['items']
-  item_vids = []g
+  item_vids = []
   for item in pl_items:
       item_vids.append('www.youtube.com/watch?v=' + item['snippet']['resourceId']['videoId'])
   await ctx.send(item_vids[random.randint(0, len(pl_items) - 1)] + '\n이 노래는 어때?')
