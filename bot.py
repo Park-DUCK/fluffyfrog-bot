@@ -2,6 +2,9 @@ import discord, os, sys
 from discord.ext import commands, tasks
 from itertools import cycle
 
+import requests
+import random
+
 # 명령어 설정
 bot = commands.Bot(command_prefix = '복실아 ') 
 
@@ -54,6 +57,19 @@ async def ban_word(ctx):
   notice = notice[:-2]
   notice += ' 이상이야'
   await ctx.send(notice)
+
+# 노래 추천
+@bot.command(name='노래 추천')
+async def song_recmd(ctx):
+  pl_id = 'PLvQ2Ez_GF9ibjUabkEvFE1JPANErbsEj5'
+  yt_api_key = os.environ['yt_api_key']
+  get_pl_url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + pl_id + '&maxResults=50&key=' + yt_api_key
+  pl_items = requests.get(get_pl_url).json()['items']
+  item_vids = []g
+  for item in pl_items:
+      item_vids.append('www.youtube.com/watch?v=' + item['snippet']['resourceId']['videoId'])
+  await message.channel.send(item_vids[random.randint(0, len(pl_items) - 1)])
+  await message.channel.send('이 노래는 어때?')
 
 # 글삭튀 검거
 @bot.event
