@@ -67,8 +67,9 @@ async def song_recmd(ctx):
   pl_items = requests.get(get_pl_url).json()['items']
   item_vids = []
   for item in pl_items:
-      item_vids.append('www.youtube.com/watch?v=' + item['snippet']['resourceId']['videoId'])
-  await ctx.send(item_vids[random.randint(0, len(pl_items) - 1)] + '\n이 노래는 어때?')
+      item_vids.append('https://www.youtube.com/watch?v=' + item['snippet']['resourceId']['videoId'])
+  await ctx.send(item_vids[random.randint(0, len(pl_items) - 1)])
+  await ctx.send('이 노래는 어때?')
 
 # 글삭튀 검거
 @bot.event
@@ -80,19 +81,6 @@ async def on_message_delete(message):
       bad = True    
   if not bad:
     await message.channel.send('내가 봤는데 ' + str(message.author) + ' 얘가 \"' + message.content + '\" 쓰고 글삭튀 했어')
-
-# 글수정 검거
-@bot.event
-async def on_message_edit(before, after):
-  bad = False
-  for word in bad_word:
-      if word in after.content:
-        bad = True
-  if bad:
-    await after.channel.send('나쁜 말 하지마 :(')
-    await after.delete()
-  if not bad:
-	  await before.channel.send('내가 봤는데 ' + str(after.author)  + ' 얘가 \"' + before.content + " -> " + after.content + '\" 이렇게 수정했어')
 
 # 환영 인사
 @bot.event
