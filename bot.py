@@ -76,21 +76,6 @@ async def ban_word(ctx):
   await ctx.send(notice)
 
 # 노래 추천
-@bot.command(name='복실추천곡')
-async def ff_song_recmd(ctx, pl_title = ''):
-  await ctx.send(song_recmd('복실이', 'ff', pl_title))  
-  await ctx.send('이 노래는 어때?')
-
-@bot.command(name='돌몽추천곡')
-async def dm_song_recmd(ctx, pl_title = ''):
-  await ctx.send(song_recmd('돌몽이', 'dm', pl_title))  
-  await ctx.send('돌몽 : (대충 란 내 노래를 들어 콘)')
-
-@bot.command(name='진목추천곡')
-async def jm_song_recmd(ctx, pl_title = ''):
-  await ctx.send(song_recmd('진목이', 'jm', pl_title))  
-  await ctx.send('진목 : 띵곡이다 들어라')
-
 def song_recmd(name, name_initial, pl_title):  
   if pl_title in pl_ids[name_initial].keys():
     pl_id = pl_ids[name_initial][pl_title]
@@ -107,6 +92,21 @@ def song_recmd(name, name_initial, pl_title):
   for item in pl_items:
       item_vids.append('https://www.youtube.com/watch?v=' + item['snippet']['resourceId']['videoId'] + '&list=' + pl_id)
   return item_vids[random.randint(0, len(pl_items) - 1)]
+
+@bot.command(name='복실추천곡')
+async def ff_song_recmd(ctx, pl_title = ''):
+  await ctx.send(song_recmd('복실이', 'ff', pl_title))  
+  await ctx.send('이 노래는 어때?')
+
+@bot.command(name='돌몽추천곡')
+async def dm_song_recmd(ctx, pl_title = ''):
+  await ctx.send(song_recmd('돌몽이', 'dm', pl_title))  
+  await ctx.send('돌몽 : (대충 란 내 노래를 들어 콘)')
+
+@bot.command(name='진목추천곡')
+async def jm_song_recmd(ctx, pl_title = ''):
+  await ctx.send(song_recmd('진목이', 'jm', pl_title))  
+  await ctx.send('진목 : 띵곡이다 들어라')
 
 # 글삭튀 검거
 @bot.event
