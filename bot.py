@@ -8,6 +8,9 @@ import random
 # 명령어 설정
 bot = commands.Bot(command_prefix = '복실아 ') 
 
+# 유튜브 API키 설정
+yt_api_key = os.environ['yt_api_key']
+
 # 상태 메시지 리스트
 playing = cycle(['남자친구랑 BL 감상', '여자친구랑 공부', '유튜브 시청', '여자친구랑 데이트', '여자친구랑 디씨', '여자친구랑 트위터'])
 
@@ -16,6 +19,13 @@ bad_word = ['씨발', '시발', '개새끼', '병신', '느금']
 
 # 젠더 혐오발언
 gender_hate = ['한남', '소추', '한녀', '김치녀']
+
+# 노래추천 플레이리스트
+ff_pl_ids = {
+  '칼바람곡' : 'PLvQ2Ez_GF9ibjUabkEvFE1JPANErbsEj5',
+  '롤곡' : 'PLvQ2Ez_GF9iZI_wXMLU0GZ6cisl5lM8b3',
+  '오타쿠감성' : 'PLvQ2Ez_GF9ibBCPBxCzriMM6c5b6Pznc4'
+}
 
 # 현재 상태
 doing_now = ''
@@ -59,10 +69,17 @@ async def ban_word(ctx):
   await ctx.send(notice)
 
 # 노래 추천
-@bot.command(name='노래추천')
-async def song_recmd(ctx):
-  pl_id = 'PLvQ2Ez_GF9ibjUabkEvFE1JPANErbsEj5'
-  yt_api_key = os.environ['yt_api_key']
+@bot.command(name='복실추천곡')
+async def song_recmd(ctx, pl_title = ''):
+  if pl_title in ff_pl_ids.keys():
+    pl_id = ff_pl_ids[pl_title]
+  else:
+    notice = '복실추천곡의 재생목록은'
+    for word in ff_pl_ids.keys():
+      notice += '\n * '
+      notice += word
+      notice += '\n이상이야'
+      await ctx.send(notice)
   get_pl_url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + pl_id + '&maxResults=50&key=' + yt_api_key
   pl_items = requests.get(get_pl_url).json()['items']
   item_vids = []
