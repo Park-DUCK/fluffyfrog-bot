@@ -21,7 +21,7 @@ bad_word = ['씨발', '시발', '개새끼', '병신', '느금']
 gender_hate = ['한남', '소추', '한녀', '김치녀']
 
 # 노래추천 플레이리스트
-pl_ids = [
+pl_ids = {
 'ff' : {
   '칼바람곡' : 'PLvQ2Ez_GF9ibjUabkEvFE1JPANErbsEj5',
   '롤곡' : 'PLvQ2Ez_GF9iZI_wXMLU0GZ6cisl5lM8b3',
@@ -32,7 +32,7 @@ pl_ids = [
 },
 'jm' : {
   '띵곡' : 'PLwctH09-BYf1zsD8FPeDVm6xjEKS9zkAn'
-}]
+}}
 
 # 현재 상태
 doing_now = ''
