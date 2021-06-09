@@ -82,12 +82,12 @@ async def ff_song_recmd(ctx, pl_title = ''):
   await ctx.send('이 노래는 어때?')
 
 @bot.command(name='돌몽추천곡')
-async def ff_song_recmd(ctx, pl_title = ''):
+async def dm_song_recmd(ctx, pl_title = ''):
   await ctx.send(song_recmd('돌몽이', 'dm', pl_title))  
   await ctx.send('돌몽 : (대충 란 내 노래를 들어 콘)')
 
 @bot.command(name='진목추천곡')
-async def ff_song_recmd(ctx, pl_title = ''):
+async def jm_song_recmd(ctx, pl_title = ''):
   await ctx.send(song_recmd('진목이', 'jm', pl_title))  
   await ctx.send('진목 : 띵곡이다 들어라')
 
