@@ -78,13 +78,13 @@ async def song_recmd(ctx, pl_title = ''):
     for word in ff_pl_ids.keys():
       notice += '\n * '
       notice += word
-      notice += '\n이상이야'
-      await ctx.send(notice)
+    notice += '\n이상이야'
+    await ctx.send(notice)
   get_pl_url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + pl_id + '&maxResults=50&key=' + yt_api_key
   pl_items = requests.get(get_pl_url).json()['items']
   item_vids = []
   for item in pl_items:
-      item_vids.append('https://www.youtube.com/watch?v=' + item['snippet']['resourceId']['videoId'])
+      item_vids.append('https://www.youtube.com/watch?v=' + item['snippet']['resourceId']['videoId'] + '&list=' + pl_id)
   await ctx.send(item_vids[random.randint(0, len(pl_items) - 1)])
   await ctx.send('이 노래는 어때?')
 
