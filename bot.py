@@ -28,7 +28,10 @@ pl_ids = {
   '오타쿠감성' : 'PLvQ2Ez_GF9ibBCPBxCzriMM6c5b6Pznc4'
 },
 'dm' : {
-  '씹덕' : 'PLfjCwAm4j422tRqJ7SIeKP5MGmWqV-CaR'
+  '레오루' : 'PLfjCwAm4j423Kd-5IhURFOEr2BvkMSDyY',
+  '빈지노' : 'PLfjCwAm4j423xlXXJnOU-lZzfArMm5fbO',
+  '씹덕' : 'PLfjCwAm4j422tRqJ7SIeKP5MGmWqV-CaR',
+  '아이유' : 'PLfjCwAm4j421brs50DpRGQYZQJQCzoHqd'
 },
 'jm' : {
   '띵곡' : 'PLwctH09-BYf1zsD8FPeDVm6xjEKS9zkAn'
