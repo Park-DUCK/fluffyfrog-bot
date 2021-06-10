@@ -60,7 +60,8 @@ async def hello(ctx):
 # 머해
 @bot.command(name='뭐해')
 async def doing(ctx):
-  await ctx.send(doing_now + '하고 있어')
+  notice = doing_now + '하고 있어'
+  await ctx.send(notice)
 
 # 금지어들 알려주기
 @bot.command(name='금지어')
