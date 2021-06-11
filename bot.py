@@ -169,6 +169,11 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 1):
     else:
       await ctx.send('요청 실패! 돌몽이 불러')    
 
+@bot.command(name = '주사위')
+async def dice(ctx):
+  await ctx.send('얍!')
+  await ctx.send('나온 숫자는 {}!'.format(random.randint(1, 6)))
+  
 # 글삭튀 검거
 @bot.event
 async def on_message_delete(message):
