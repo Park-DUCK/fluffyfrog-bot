@@ -61,7 +61,8 @@ async def hello(ctx):
 # 머해
 @bot.command(name='뭐해')
 async def doing(ctx):  
-  await ctx.send(doing_now + '하고 있어')
+  msg = doing_now + '하고 있어'
+  await ctx.send(msg)
 
 # 금지어들 알려주기
 @bot.command(name='금지어')
@@ -140,7 +141,7 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 5):
       for i in range(n_match):
         await ctx.send('#######################################')
         match_id = match_ids[i]
-        await ctx.send(i+1 + '번째 match_id :' + match_id)
+        #await ctx.send(i+1 + '번째 match_id :' + match_id)
         await ctx.send('=======================================')
         # matchId로 경기 정보 가져오기
         url_match = 'https://asia.api.riotgames.com/lol/match/v5/matches/' + match_id + '?api_key=' + riot_api_key
