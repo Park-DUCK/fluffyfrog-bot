@@ -135,7 +135,7 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 5):
       puu_id = puu_id_r.json()['puuid']
       await ctx.send('조회성공!')
       # 최근 n 경기 matchId 얻기
-      url_match_id = 'https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puu_id + '/ids?start=0&count=' + n_match + '&api_key=' + riot_api_key    
+      url_match_id = 'https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puu_id + '/ids?start=0&count=' + str(n_match) + '&api_key=' + riot_api_key    
       match_ids = requests.get(url_match_id).json()  
       for i in range(n_match):
         await ctx.send('#######################################')
