@@ -161,7 +161,8 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 1):
         kills = summoner['kills']
         deaths = summoner['deaths']
         assists = summoner['assists']
-        msg = msg + 'kills : {} / deaths : {} / assists : {}'.format(kills, deaths, assists)        
+        msg = msg + 'kills : {} / deaths : {} / assists : {}\n'.format(kills, deaths, assists)   
+        msg = msg + '======================================='     
         await ctx.send(msg)
     elif puu_id_r.status_code == 404:
       await ctx.send('소환사 이름 틀린 것 같은데?')
