@@ -8,8 +8,9 @@ import random
 # 명령어 설정
 bot = commands.Bot(command_prefix = '복실아 ') 
 
-# 유튜브 API키 설정
+# API키 설정
 yt_api_key = os.environ['yt_api_key']
+riot_api_key = os.environ['riot_api_key']
 
 # 상태 메시지 리스트
 playing = cycle(['남자친구랑 BL 감상', '여자친구랑 공부', '유튜브 시청', '여자친구랑 데이트', '여자친구랑 디씨', '여자친구랑 트위터'])
@@ -59,9 +60,8 @@ async def hello(ctx):
 
 # 머해
 @bot.command(name='뭐해')
-async def doing(ctx):
-  notice = doing_now + '하고 있어'
-  await ctx.send(notice)
+async def doing(ctx):  
+  await ctx.send(doing_now + '하고 있어')
 
 # 금지어들 알려주기
 @bot.command(name='금지어')
@@ -117,6 +117,61 @@ async def jm_song_recmd(ctx, pl_title = ''):
   await ctx.send(recmd)  
   if success:
     await ctx.send('진목 : 띵곡이다 들어라')
+
+# 롤 전적 조회
+@bot.command(name='롤')
+async def get_lol_match_data(ctx, summoner_name = '', n_match = 5):
+  n_match = int(n_match)
+  if summoner_name == '':
+    await ctx.send('복실아 롤 [소환사이름] [조회할 경기 수(optional, 1 ~ 20)]')
+  elif n_match < 1 or n_match > 20:
+    await ctx.send('조회 가능한 경기 수는 최소 1, 최대 20이야')
+  else:
+    url_puu_id = 'https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + riot_api_key
+    puu_id_r = requests.get(url_puu_id)
+    if puu_id_r.status_code == 200:
+      # 소환사 이름으로 puuId 얻기
+      puu_id = puu_id_r.json()['puuid']
+      # 최근 n 경기 matchId 얻기
+      url_match_id = 'https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puu_id + '/ids?start=0&count=' + n_match + '&api_key=' + riot_api_key
+      for i in range(n_match):
+          await ctx.send('#######################################')
+          match_id = requests.get(url_match_id).json()[i]
+          await ctx.send(i+1, '번째 match_id :', match_id)
+          await ctx.send('=======================================')
+          # matchId로 경기 정보 가져오기
+          url_match = 'https://asia.api.riotgames.com/lol/match/v5/matches/' + match_id + '?api_key=' + riot_api_key
+          match = requests.get(url_match).json()          
+          # participants 부분의 내가 입력한 소환사 정보만 가져오기
+          info_participants = match['info']['participants']
+          for participant in info_participants:
+              if participant['summonerName'] == summoner_name:
+                  summoner = participant
+                  break          
+          # 게임 모드 가져오기
+          game_mode = match['info']['gameMode']
+          await ctx.send('GameMode : {}'.format(game_mode))
+          # 소환사 픽한 챔피언, 라인, 승패 정보 가져오기
+          champion = summoner['championName']
+          lane = summoner['lane']
+          win = 'WIN!'
+          if summoner['win'] == 'false':
+              win = 'Lose :('
+          await ctx.send('{} / Champion : {} / Lane : {}'.format(win, champion, lane))  
+          # 소환사 킬뎃 가져오기
+          kills = summoner['kills']
+          deaths = summoner['deaths']
+          assists = summoner['assists']
+          await ctx.send('kills : {} / deaths : {} / assists : {}'.format(kills, deaths, assists))        
+    elif puu_id_r.status_code == 404:
+      await ctx.send('소환사 이름 틀린 것 같은데?')
+    elif puu_id_r.status_code == 403:
+      await ctx.send('API KEY 만료됐나 봐, 돌몽이한테 알려줘')
+    else:
+      await ctx.send('요청 실패! 돌몽이 불러')   
+    
+
+
 
 # 글삭튀 검거
 @bot.event
