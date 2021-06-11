@@ -129,9 +129,11 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 5):
   else:
     url_puu_id = 'https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + summoner_name + '?api_key=' + riot_api_key
     puu_id_r = requests.get(url_puu_id)
+    await ctx.send(puu_id_r.status_code)
     if puu_id_r.status_code == 200:
       # 소환사 이름으로 puuId 얻기
       puu_id = puu_id_r.json()['puuid']
+      await ctx.send('조회성공!')
       # 최근 n 경기 matchId 얻기
       url_match_id = 'https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puu_id + '/ids?start=0&count=' + n_match + '&api_key=' + riot_api_key
       for i in range(n_match):
@@ -168,10 +170,7 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 5):
     elif puu_id_r.status_code == 403:
       await ctx.send('API KEY 만료됐나 봐, 돌몽이한테 알려줘')
     else:
-      await ctx.send('요청 실패! 돌몽이 불러')   
-    
-
-
+      await ctx.send('요청 실패! 돌몽이 불러')    
 
 # 글삭튀 검거
 @bot.event
