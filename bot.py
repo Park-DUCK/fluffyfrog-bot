@@ -136,8 +136,7 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 1):
       url_match_id = 'https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puu_id + '/ids?start=0&count=' + str(n_match) + '&api_key=' + riot_api_key    
       match_ids = requests.get(url_match_id).json()  
       for i in range(n_match):        
-        match_id = match_ids[i]
-        msg = '=======================================\n'
+        match_id = match_ids[i]        
         # matchId로 경기 정보 가져오기
         url_match = 'https://asia.api.riotgames.com/lol/match/v5/matches/' + match_id + '?api_key=' + riot_api_key
         match = requests.get(url_match).json()          
@@ -149,20 +148,19 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 1):
             break          
         # 게임 모드 가져오기
         game_mode = match['info']['gameMode']
-        msg = msg + 'GameMode : {}\n'.format(game_mode)
         # 소환사 픽한 챔피언, 라인, 승패 정보 가져오기
         champion = summoner['championName']
         lane = summoner['lane']
-        win = 'WIN!'
-        if summoner['win'] == 'false':
-          win = 'Lose :('
-        msg = msg + '{} / Champion : {} / Lane : {}\n'.format(win, champion, lane)  
+        win = 'WIN! :D'
+        if summoner['win'] == False:
+          win = 'Lose... :('          
         # 소환사 킬뎃 가져오기
         kills = summoner['kills']
         deaths = summoner['deaths']
         assists = summoner['assists']
-        msg = msg + 'kills : {} / deaths : {} / assists : {}\n'.format(kills, deaths, assists)   
-        msg = msg + '======================================='     
+        msg = '================================\n'
+        msg = msg + '{}\nGameMode : {}\nChampion : {}\nLane : {}\nkills : {} / deaths : {} / assists : {}\n'.format(win, game_mode, champion, lane, kills, deaths, assists)
+        msg = msg + '================================'     
         await ctx.send(msg)
     elif puu_id_r.status_code == 404:
       await ctx.send('소환사 이름 틀린 것 같은데?')
