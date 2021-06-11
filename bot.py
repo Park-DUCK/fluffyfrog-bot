@@ -140,7 +140,7 @@ async def get_lol_match_data(ctx, summoner_name = '', n_match = 5):
       for i in range(n_match):
         await ctx.send('#######################################')
         match_id = match_ids[i]
-        await ctx.send(i+1, '번째 match_id :', match_id)
+        await ctx.send(i+1 + '번째 match_id :' + match_id)
         await ctx.send('=======================================')
         # matchId로 경기 정보 가져오기
         url_match = 'https://asia.api.riotgames.com/lol/match/v5/matches/' + match_id + '?api_key=' + riot_api_key
